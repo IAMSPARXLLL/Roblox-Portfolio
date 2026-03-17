@@ -1,1 +1,484 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Portfolio | Roblox Systems Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .code-container {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            border-radius: 12px;
+            padding: 2rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            border: 1px solid #2d2d2d;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        /* Syntax highlighting simple colors */
+        .token-comment { color: #6a9955; }
+        .token-keyword { color: #569cd6; }
+        .token-string { color: #ce9178; }
+        .token-function { color: #dcdcaa; }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-right: 3px solid transparent;
+        }
+
+        .sidebar-link.active {
+            background-color: #f3f4f6;
+            color: #2563eb;
+            font-weight: 600;
+            border-right: 3px solid #2563eb;
+        }
+
+        .section-hidden { display: none; }
+        .section-visible { display: block; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        .code-container::-webkit-scrollbar-track { background: #1a1a1a; }
+        .code-container::-webkit-scrollbar-thumb { background: #333; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Hero / Intro Page -->
+    <section id="page-home" class="section-visible min-h-screen flex flex-col justify-center items-center px-6 text-center bg-white">
+        <div class="max-w-3xl">
+            <div class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest mb-6">
+                Available for Architecture & Security Audits
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tight mb-6">Roblox Systems Engineer</h1>
+            <p class="text-xl text-slate-500 font-medium mb-12">Backend Security • Systems Architecture • Game Logic Optimization</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left mb-12">
+                <div class="p-6 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-gray-50 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-1 uppercase tracking-tighter text-xs text-blue-600">Specialization 01</h3>
+                    <p class="font-bold text-lg mb-2 text-slate-900">Atomic Data Security</p>
+                    <p class="text-sm text-slate-500">Eliminating duplication exploits and inventory desyncs using server-authoritative state locking.</p>
+                </div>
+                <div class="p-6 border border-gray-100 rounded-2xl bg-gray-50/50 hover:bg-gray-50 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-1 uppercase tracking-tighter text-xs text-blue-600">Specialization 02</h3>
+                    <p class="font-bold text-lg mb-2 text-slate-900">Modular Frameworks</p>
+                    <p class="text-sm text-slate-500">Utilizing Knit or custom OOP patterns to create scalable, maintainable, and leak-free game systems.</p>
+                </div>
+            </div>
+
+            <button onclick="navigateTo('page-projects')" class="px-10 py-5 bg-slate-900 text-white rounded-full font-bold hover:bg-slate-800 transition-all shadow-xl hover:shadow-2xl flex items-center gap-3 mx-auto">
+                Explore Past Work
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Projects / Showcase Page -->
+    <section id="page-projects" class="section-hidden min-h-screen">
+        <div class="flex flex-col md:flex-row min-h-screen">
+            <!-- Navigation Sidebar -->
+            <aside class="w-full md:w-80 bg-white border-r border-gray-200 p-8 sticky top-0 md:h-screen flex flex-col">
+                <button onclick="navigateTo('page-home')" class="group text-sm font-bold text-gray-400 hover:text-gray-900 mb-12 flex items-center gap-2 transition-colors">
+                    <svg class="group-hover:-translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    BACK TO OVERVIEW
+                </button>
+                
+                <h2 class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-6">Technical Case Studies</h2>
+                <nav class="space-y-1 mb-8 overflow-y-auto flex-1" id="project-nav">
+                    <!-- Nav items injected via JS -->
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="flex-1 p-8 md:p-16 bg-gray-50 overflow-y-auto" id="project-view">
+                <div id="project-content">
+                    <!-- Project details injected via JS -->
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <script>
+        const projects = [
+            {
+                id: "inventory",
+                title: "Atomic Data & Inventory Handler",
+                tag: "Security",
+                desc: "A production-level system designed to prevent duplication exploits during player resets, crashes, or rapid networking. This script handles full state-locking and DataStore2 integration.",
+                code: `--[[
+    INVENTORY SERVICE v2.4 (DataStore2 / ProfileService Compatible)
+    Author: Systems Engineer
+    Purpose: Prevents "Reset-Dupe" exploits by implementing a session-lock Mutex.
+]]
+
+local InventoryService = {}
+InventoryService.ActiveLocks = {}
+InventoryService.DataCache = {}
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Main Handler for item transfer
+function InventoryService:RequestTransfer(player, itemUID, toLocation)
+    if self.ActiveLocks[player.UserId] then 
+        warn("[SECURITY]: Blocked rapid request from " .. player.Name)
+        return false, "Process pending" 
+    end
+
+    -- ATOMIC LOCK: Item cannot be modified until this cycle completes
+    self.ActiveLocks[player.UserId] = true
+    
+    local success, response = pcall(function()
+        local inventory = self:GetPlayerData(player)
+        local itemData = inventory[itemUID]
+        
+        if not itemData then error("Item does not exist in inventory") end
+        
+        -- Logic validation: Ensure item isn't already placed
+        if itemData.Status ~= "Stored" then error("Item is currently busy") end
+        
+        -- State Update
+        itemData.Status = "Processing"
+        
+        -- Simulated World Spawn (Example)
+        local spawned = self:SpawnInWorld(itemUID, toLocation)
+        if spawned then
+            inventory[itemUID] = nil -- Cleanly remove from internal memory
+            return true
+        end
+    end)
+
+    -- RELEASE LOCK with a safety buffer to prevent spamming
+    task.delay(0.2, function()
+        self.ActiveLocks[player.UserId] = nil
+    end)
+
+    return success, response
+end
+
+return InventoryService`
+            },
+            {
+                id: "placement",
+                title: "Server-Authoritative Placement",
+                tag: "Physics",
+                desc: "A complete building system validation script. It checks floor permissions, height limits (anti-climb), and physical obstructions using raycasting before allowing a server-side spawn.",
+                code: `--[[ 
+    PLACEMENT VALIDATOR (Server-Side)
+    Purpose: Ensures players build only where permitted and checks for exploits.
+]]
+
+local PlacementValidator = {}
+
+function PlacementValidator:IsPlacementLegal(player, objectID, targetCF, floorLevel)
+    local Character = player.Character
+    if not Character then return false end
+    
+    local Root = Character:FindFirstChild("HumanoidRootPart")
+    local PlayerStats = game:GetService("ServerStorage").PlayerData[player.Name]
+
+    -- 1. BASE UPGRADE VALIDATION
+    if floorLevel > PlayerStats.MaxBaseFloor.Value then
+        return false, "Upgrade base to build on higher levels."
+    end
+
+    -- 2. SPATIAL HEIGHT VALIDATION
+    -- Prevents building items high in the air (anti-fly build)
+    local floorHeight = (floorLevel * 15) + 5
+    if math.abs(targetCF.Position.Y - floorHeight) > 3 then
+        return false, "Invalid height detected."
+    end
+
+    -- 3. PROXIMITY CHECK (Anti-Teleport Build)
+    if (Root.Position - targetCF.Position).Magnitude > 25 then
+        return false, "Too far from placement site."
+    end
+
+    -- 4. GEOMETRY COLLISION CHECK (Raycast)
+    local rayParam = RaycastParams.new()
+    rayParam.FilterDescendantsInstances = {workspace.Buildings}
+    rayParam.FilterType = Enum.RaycastFilterType.Include
+
+    local rayResult = workspace:Raycast(targetCF.Position + Vector3.new(0, 5, 0), Vector3.new(0, -10, 0), rayParam)
+    if not rayResult or rayResult.Instance.Name ~= "Floor" then
+        return false, "Area obstructed or no floor present."
+    end
+
+    return true
+end
+
+return PlacementValidator`
+            },
+            {
+                id: "rng",
+                title: "Weighted Rarity Controller",
+                tag: "Economy",
+                desc: "Full script for a world-spawner that manages rare object spawning. Features weighted probability (Common vs Gold) and a global entity limiter to maintain rarity.",
+                code: `--[[
+    RARITY CONTROLLER (RNG System)
+    Handles weighted spawning and automatic lifetime cleanup.
+]]
+
+local RarityController = {}
+local ACTIVE_RARE_ITEMS = 0
+local MAX_GLOBAL_RARE = 3 -- Cap for Ruby/Gold/Diamond
+
+local LootTable = {
+    {Name = "Brainrot_Common", Weight = 80, Lifetime = 60, Rare = false},
+    {Name = "Brainrot_Ruby",   Weight = 15, Lifetime = 30, Rare = true},
+    {Name = "Brainrot_Gold",   Weight = 4,  Lifetime = 20, Rare = true},
+    {Name = "Brainrot_Diamond",Weight = 1,  Lifetime = 10, Rare = true}
+}
+
+function RarityController:GetRoll()
+    local totalWeight = 0
+    for _, item in pairs(LootTable) do totalWeight += item.Weight end
+    
+    local roll = Random.new():NextNumber(0, totalWeight)
+    local current = 0
+    
+    for _, item in pairs(LootTable) do
+        current += item.Weight
+        if roll <= current then
+            -- ENFORCE GLOBAL RARITY CAP
+            if item.Rare and ACTIVE_RARE_ITEMS >= MAX_GLOBAL_RARE then
+                return LootTable[1] -- Fallback to common
+            end
+            return item
+        end
+    end
+end
+
+function RarityController:SpawnItem(pos)
+    local chosen = self:GetRoll()
+    
+    local obj = Instance.new("Part")
+    obj.Name = chosen.Name
+    obj.Position = pos
+    obj.Parent = workspace
+    
+    if chosen.Rare then ACTIVE_RARE_ITEMS += 1 end
+
+    -- AUTOMATIC CLEANUP (Prevents clutter)
+    task.delay(chosen.Lifetime, function()
+        if obj then obj:Destroy() end
+        if chosen.Rare then ACTIVE_RARE_ITEMS -= 1 end
+    end)
+end
+
+return RarityController`
+            },
+            {
+                id: "oop",
+                title: "Modular Weapon Core",
+                tag: "OOP",
+                desc: "A metatable-based object-oriented weapon system. This demonstrates how I create clean, reusable modules for complex mechanics like combat or tools.",
+                code: `--[[ 
+    OOP WEAPON CLASS
+    Handles Hitbox calculation and damage logic using Metatables.
+]]
+
+local Weapon = {}
+Weapon.__index = Weapon
+
+function Weapon.new(config)
+    local self = setmetatable({}, Weapon)
+    self.Damage = config.Damage or 10
+    self.Cooldown = config.Cooldown or 0.5
+    self.LastUsed = 0
+    return self
+end
+
+function Weapon:Attack(player, targetPos)
+    local now = tick()
+    if now - self.LastUsed < self.Cooldown then return false end
+    self.LastUsed = now
+
+    -- Raycast Hitbox
+    local origin = player.Character.PrimaryPart.Position
+    local direction = (targetPos - origin).Unit
+    
+    local result = workspace:Raycast(origin, direction * 15)
+    if result and result.Instance then
+        local model = result.Instance:FindFirstAncestorOfClass("Model")
+        if model and model:FindFirstChild("Humanoid") then
+            model.Humanoid:TakeDamage(self.Damage)
+            return true
+        end
+    end
+end
+
+return Weapon`
+            },
+            {
+                id: "loop",
+                title: "Game Loop & Round Manager",
+                tag: "Logic",
+                desc: "Centralized server script for managing a round-based game. Handles map loading, player spawning, and dynamic world cleanup.",
+                code: `--[[
+    GAME ROUND MANAGER
+    Automated loop for game states and garbage collection.
+]]
+
+local RoundManager = {}
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameStatus = ReplicatedStorage:WaitForChild("GameStatus")
+
+function RoundManager:StartCycle()
+    while true do
+        GameStatus.Value = "Lobby - Waiting for Players"
+        task.wait(15)
+        
+        self:LoadMap()
+        self:SpawnPlayers()
+        
+        GameStatus.Value = "Tsunami Incoming!"
+        self:RunMatch(120) -- 2 minute match
+        
+        self:Cleanup()
+    end
+end
+
+function RoundManager:Cleanup()
+    print("Clearing world state...")
+    -- Destroy all debris and physics objects
+    workspace.TempDebris:ClearAllChildren()
+    
+    -- Reset Maps
+    if workspace:FindFirstChild("CurrentMap") then
+        workspace.CurrentMap:Destroy()
+    end
+    
+    -- Teleport survivors to Lobby
+    for _, p in pairs(game.Players:GetPlayers()) do
+        p:LoadCharacter()
+    end
+end
+
+return RoundManager`
+            }
+        ];
+
+        let activeProjectId = projects[0].id;
+
+        function navigateTo(id) {
+            // Hide all sections
+            document.getElementById('page-home').classList.add('section-hidden');
+            document.getElementById('page-home').classList.remove('section-visible');
+            document.getElementById('page-projects').classList.add('section-hidden');
+            document.getElementById('page-projects').classList.remove('section-visible');
+
+            // Show target section
+            const target = document.getElementById(id);
+            target.classList.remove('section-hidden');
+            target.classList.add('section-visible');
+            
+            // Auto-scroll logic
+            if (id === 'page-projects') {
+                // Wait for the DOM display update before scrolling
+                setTimeout(() => {
+                    document.getElementById('page-projects').scrollIntoView({ behavior: 'smooth' });
+                }, 50);
+            } else {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Lightweight highlighter
+        function highlightCode(code) {
+            return code
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/(--.*)/g, '<span class="token-comment">$1</span>')
+                .replace(/\b(local|function|return|end|if|then|else|elseif|for|in|pairs|while|do|and|or|not|true|false|nil)\b/g, '<span class="token-keyword">$1</span>')
+                .replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, '<span class="token-string">$1</span>')
+                .replace(/(\b\w+)(?=\s*[({])/g, '<span class="token-function">$1</span>');
+        }
+
+        function renderProject(projectId) {
+            const proj = projects.find(p => p.id === projectId);
+            if (!proj) return;
+
+            activeProjectId = projectId;
+            const container = document.getElementById('project-content');
+            
+            container.innerHTML = `
+                <div class="max-w-4xl">
+                    <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-[10px] font-black uppercase rounded mb-4 tracking-widest">${proj.tag}</span>
+                    <h1 class="text-4xl font-black text-slate-900 mb-6 leading-tight">${proj.title}</h1>
+                    <p class="text-lg text-slate-500 mb-10 leading-relaxed">${proj.desc}</p>
+                    
+                    <div class="flex items-center gap-3 mb-4 text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        <span class="text-xs font-bold uppercase tracking-widest">Full Implementation Module (Luau)</span>
+                    </div>
+                    
+                    <div class="code-container">
+                        <pre><code>${highlightCode(proj.code)}</code></pre>
+                    </div>
+                </div>
+            `;
+
+            // Scroll to top of project view
+            document.getElementById('project-view').scrollTo(0,0);
+
+            // Update sidebar links
+            updateSidebarActiveState();
+        }
+
+        function updateSidebarActiveState() {
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                if (link.dataset.id === activeProjectId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize sidebar
+        function initSidebar() {
+            const nav = document.getElementById('project-nav');
+            nav.innerHTML = ''; // Clear previous
+            projects.forEach(p => {
+                const btn = document.createElement('button');
+                btn.className = "sidebar-link w-full text-left p-3 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-900 transition-all mb-1";
+                btn.innerText = p.title;
+                btn.dataset.id = p.id;
+                btn.onclick = () => renderProject(p.id);
+                nav.appendChild(btn);
+            });
+        }
+
+        // Startup
+        window.onload = () => {
+            initSidebar();
+            renderProject(projects[0].id);
+        }
+
+    </script>
+</body>
+</html>
+
